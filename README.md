@@ -2,9 +2,13 @@
 Add this code to any app to resize the app by changing the density.
 
 ## Edit the scale amount
-In Jave
+In Java
+
+In the DensityScaler.java change the `0.7f` to whatever value you want
+
 In Smali
 
+In the DensityScaler.smali change the
 ### To use the .Java files
 
 Add the .Java files directly to the app source code in /com/dpi/
