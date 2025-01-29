@@ -1,28 +1,64 @@
 # DensityScaler
-Add this code to any app to resize the app by changing the density.
+Enhance your Android app by dynamically resizing it through density adjustments using this simple tool.
 
-## Edit the scale amount
-#### In Java:
-In the DensityScaler.java change the `0.7f` to whatever value you want
-#### In Smali:
-In the DensityScaler.smali change the line `const v2, 0x3f333333    # 0.7f`
-### To use the .Java or .Smali files
+## Edit the Scale Amount
+### Java
+Modify the scaling factor by editing `DensityScaler.java`. Change the value `0.7f` to your desired float value:
+```java
+float scale = 0.7f; // Replace this value
+```
 
-Add the .Java files directly to the app source code in /com/dpi/
+### Smali
+To change the scaling factor in Smali code, update the following line in `DensityScaler.smali`:
+```smali
+const v2, 0x3F333333    # 0.7f
+```
+Replace `0x3F333333` with the corresponding hexadecimal value from the table below.
 
-Add the provider com.dpi.DensityScaler to the AndroidManifest.xml.
+## Using the Java or Smali Files
+1. **Add Files to Source Code:** Place the provided files in the `/com/dpi/` directory within your app's source code.
+2. **Update AndroidManifest:** Include the following provider in `AndroidManifest.xml`:
+   ```xml
+   <provider
+       android:authorities="your.app.name.com.dpi.DensityScaler"
+       android:exported="true"
+       android:name="com.dpi.DensityScaler" />
+   ```
+   **Note:** Replace `your.app.name` with your app’s package name.
 
-`<provider android:authorities="your.app.name.com.dpi.DensityScaler" android:exported="true" android:name="com.dpi.DensityScaler"/>`
-Replace `your.app.name` with the name of your app.
+## Using the Precompiled `classes.dex`
+1. **Decompile Without Source Code:**
+   ```bash
+   apktool d -s name.of.apk
+   ```
+2. **Add Precompiled Class File:** Rename the precompiled `classes.dex` file to the next available `classesX.dex`, such as `classes2.dex` or `classes8.dex`, and add it to the decompiled APK.
+3. **Update AndroidManifest:**
+   Include the following provider:
+   ```xml
+   <provider
+       android:authorities="your.app.name.com.dpi.DensityScaler"
+       android:exported="true"
+       android:name="com.dpi.DensityScaler" />
+   ```
+   Again, replace `your.app.name` with your app’s package name.
 
-### To use the precompiled classes.dex:
+## Smali Float Values
+Use the table below for converting decimal scaling factors to hexadecimal values:
 
-Decompile your app without decompiling source
-`apktool d -s name.of.apk`
+| Decimal | Hexadecimal |
+|---------|-------------|
+| 0.35    | 0x3EB33333  |
+| 0.4     | 0x3ECCCCCD  |
+| 0.45    | 0x3EE66666  |
+| 0.5     | 0x3F000000  |
+| 0.55    | 0x3F0CCCCD  |
+| 0.6     | 0x3F19999A  |
+| 0.65    | 0x3F266666  |
+| 0.7     | 0x3F333333  |
+| 0.75    | 0x3F400000  |
+| 0.8     | 0x3F4CCCCD  |
+| 0.85    | 0x3F59999A  |
+| 0.9     | 0x3F666666  |
 
-Add the classes.dex file, rename it to the next available option, eg. classes2.dex or classes8.dex
+By following these steps, you can successfully scale your Android app and fine-tune it for different density preferences.
 
-Add the provider com.dpi.DensityScaler to the AndroidManifest.xml.
-
-`<provider android:authorities="your.app.name.com.dpi.DensityScaler" android:exported="true" android:name="com.dpi.DensityScaler"/>`
-Replace `your.app.name` with the name of your app.
