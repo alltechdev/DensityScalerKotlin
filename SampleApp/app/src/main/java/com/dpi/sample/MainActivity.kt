@@ -9,9 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
+    private var isChangingDensity = false
+    private val debugMessages = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        addDebugLog("onCreate() called")
 
         // Display current density information
         val densityInfo = findViewById<TextView>(R.id.densityInfo)
@@ -52,28 +57,50 @@ class MainActivity : AppCompatActivity() {
         updateSimulatorResult(radioGroup.checkedRadioButtonId, simulatorResult)
 
         // Handle radio button changes
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            // Prevent multiple simultaneous changes
+            if (isChangingDensity) {
+                addDebugLog("BLOCKED: Already changing density")
+                return@setOnCheckedChangeListener
+            }
+
             val scaleFactor = when (checkedId) {
                 R.id.radioOriginal -> 1.0f
                 R.id.radioSmallPhone -> 0.75f
                 R.id.radioPhone -> 0.65f
-                else -> 1.0f
+                else -> {
+                    addDebugLog("Unknown radio button: $checkedId")
+                    return@setOnCheckedChangeListener
+                }
             }
 
-            // Disable radio group to prevent rapid clicking
-            group.isEnabled = false
-            for (i in 0 until group.childCount) {
-                group.getChildAt(i).isEnabled = false
-            }
+            addDebugLog("Applying scale: $scaleFactor")
+            isChangingDensity = true
 
             // Apply the scale dynamically
-            com.dpi.DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
+            try {
+                com.dpi.DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
+                addDebugLog("Scale applied, recreating in 150ms...")
 
-            // Small delay before recreate to ensure config is applied
-            Handler(Looper.getMainLooper()).postDelayed({
-                recreate()
-            }, 100)
+                // Recreate activity to show changes
+                Handler(Looper.getMainLooper()).postDelayed({
+                    addDebugLog("Calling recreate() now")
+                    recreate()
+                }, 150)
+            } catch (e: Exception) {
+                addDebugLog("ERROR: ${e.message}")
+                isChangingDensity = false
+            }
         }
+    }
+
+    private fun addDebugLog(message: String) {
+        val timestamp = System.currentTimeMillis() % 100000
+        debugMessages.add("[$timestamp] $message")
+        if (debugMessages.size > 10) debugMessages.removeAt(0)
+
+        findViewById<TextView>(R.id.debugLog)?.text = debugMessages.joinToString("\n")
+        android.util.Log.d("MainActivity", message)
     }
 
     private fun updateSimulatorResult(checkedId: Int, resultTextView: TextView) {

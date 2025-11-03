@@ -103,6 +103,18 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp" />
 
+        <!-- Debug log display -->
+        <TextView
+            android:id="@+id/debugLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="#666666"
+            android:background="#FFF3E0"
+            android:padding="8dp"
+            android:fontFamily="monospace"
+            android:text="Debug log will appear here..." />
+
     </LinearLayout>
 
 </ScrollView>
