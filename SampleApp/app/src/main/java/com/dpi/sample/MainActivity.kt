@@ -50,9 +50,7 @@ class MainActivity : AppCompatActivity() {
         val radioGroup = findViewById<RadioGroup>(R.id.deviceTypeRadioGroup)
         val simulatorResult = findViewById<TextView>(R.id.simulatorResult)
 
-        // Set to normal by default
-        radioGroup.check(R.id.radioOriginal)
-
+        // Radio button is already checked in XML - no need to call check() here
         // Show initial result
         updateSimulatorResult(radioGroup.checkedRadioButtonId, simulatorResult)
 
@@ -74,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            addDebugLog("Applying scale: $scaleFactor")
+            addDebugLog("User selected scale: $scaleFactor")
             isChangingDensity = true
 
             // Apply the scale dynamically
