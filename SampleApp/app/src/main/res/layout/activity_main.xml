@@ -53,7 +53,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Scale Factor Simulator"
+            android:text="Interactive Size Simulator"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="See what scale factor would be applied on different devices:"
+            android:text="Tap an option to dynamically resize the entire UI:"
             android:textSize="12sp"
             android:textColor="#666666"
             android:layout_marginBottom="12dp" />
@@ -73,29 +73,23 @@
             android:layout_marginBottom="16dp">
 
             <RadioButton
+                android:id="@+id/radioOriginal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Normal Size - 100%"
+                android:checked="true" />
+
+            <RadioButton
                 android:id="@+id/radioSmallPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Small Phone (&lt; 360dp)" />
+                android:text="Small (Compact) - 75%" />
 
             <RadioButton
                 android:id="@+id/radioPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Normal Phone (360-600dp)"
-                android:checked="true" />
-
-            <RadioButton
-                android:id="@+id/radioSmallTablet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Small Tablet (600-720dp)" />
-
-            <RadioButton
-                android:id="@+id/radioTablet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tablet (720dp+)" />
+                android:text="Smaller (More Content) - 65%" />
 
         </RadioGroup>
 

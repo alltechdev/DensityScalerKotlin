@@ -57,34 +57,42 @@ class MainActivity : AppCompatActivity() {
 
         // Handle radio button changes
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            updateSimulatorResult(checkedId, simulatorResult)
+            val scaleFactor = when (checkedId) {
+                R.id.radioOriginal -> 1.0f
+                R.id.radioSmallPhone -> 0.75f
+                R.id.radioPhone -> 0.65f
+                else -> 1.0f
+            }
+
+            // Apply the scale dynamically
+            com.dpi.DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
+
+            // Recreate activity to show changes
+            recreate()
         }
     }
 
     private fun updateSimulatorResult(checkedId: Int, resultTextView: TextView) {
-        val (deviceType, screenWidth, scaleFactor) = when (checkedId) {
-            R.id.radioSmallPhone -> Triple("Small Phone", "< 360dp", 0.65f)
-            R.id.radioSmallTablet -> Triple("Small Tablet", "600-720dp", 0.75f)
-            R.id.radioTablet -> Triple("Tablet", "> 720dp", 0.80f)
-            else -> Triple("Normal Phone", "360-600dp", 0.70f) // radioPhone
+        val (deviceType, scaleFactor) = when (checkedId) {
+            R.id.radioOriginal -> Pair("Normal Size", 1.0f)
+            R.id.radioSmallPhone -> Pair("Small (Compact)", 0.75f)
+            R.id.radioPhone -> Pair("Smaller (More Content)", 0.65f)
+            else -> Pair("Normal Size", 1.0f)
         }
 
         val scalePercent = (scaleFactor * 100).toInt()
         val effect = when {
-            scaleFactor < 0.7f -> "Maximum content on screen"
-            scaleFactor < 0.75f -> "Balanced content and readability"
-            scaleFactor < 0.8f -> "Comfortable reading"
-            else -> "Large, easy-to-read UI"
+            scaleFactor == 1.0f -> "Standard device size"
+            scaleFactor == 0.75f -> "Slightly more compact"
+            else -> "Much more content visible"
         }
 
         resultTextView.text = """
-            Device: $deviceType ($screenWidth)
-            Scale Applied: $scalePercent% ($scaleFactor)
-
+            $deviceType - $scalePercent%
             Effect: $effect
 
-            Example: On a device with 400 dpi original density,
-            this would become ${(400 * scaleFactor).toInt()} dpi
+            👆 Select options above to resize the UI!
+            The app will restart to apply changes.
         """.trimIndent()
     }
 

@@ -80,5 +80,31 @@ internal class DensityConfiguration(
 
     companion object {
         private val TAG = DensityConfiguration::class.java.simpleName
+        private var storedOriginalDpi: Int = 0
+
+        /**
+         * Apply density scaling dynamically at runtime.
+         * Use this for testing or interactive demonstrations.
+         * Call recreate() on the activity after this to see the changes.
+         */
+        fun applyDynamicScale(context: Context, scaleFactor: Float) {
+            try {
+                val resources = context.resources
+                val config = Configuration(resources.configuration)
+
+                // Store original DPI on first call
+                if (storedOriginalDpi == 0) {
+                    storedOriginalDpi = config.densityDpi
+                }
+
+                val newDensityDpi = (storedOriginalDpi * scaleFactor).roundToInt()
+                config.densityDpi = newDensityDpi
+                Log.i(TAG, "Dynamic scale applied: $scaleFactor -> $newDensityDpi dpi (from original $storedOriginalDpi)")
+                @Suppress("DEPRECATION")
+                resources.updateConfiguration(config, resources.displayMetrics)
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to apply dynamic scale", e)
+            }
+        }
     }
 }
