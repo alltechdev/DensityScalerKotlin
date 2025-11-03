@@ -43,14 +43,8 @@ class MainActivity : AppCompatActivity() {
         val radioGroup = findViewById<RadioGroup>(R.id.deviceTypeRadioGroup)
         val simulatorResult = findViewById<TextView>(R.id.simulatorResult)
 
-        // Set initial selection based on current device
-        val config = resources.configuration
-        when {
-            config.smallestScreenWidthDp < 360 -> radioGroup.check(R.id.radioSmallPhone)
-            config.smallestScreenWidthDp < 600 -> radioGroup.check(R.id.radioPhone)
-            config.smallestScreenWidthDp < 720 -> radioGroup.check(R.id.radioSmallTablet)
-            else -> radioGroup.check(R.id.radioTablet)
-        }
+        // Set to normal by default
+        radioGroup.check(R.id.radioOriginal)
 
         // Show initial result
         updateSimulatorResult(radioGroup.checkedRadioButtonId, simulatorResult)
