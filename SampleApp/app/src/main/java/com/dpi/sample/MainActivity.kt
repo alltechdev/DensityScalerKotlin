@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private var isChangingDensity = false
+    private var isInitialSetup = true
     private val debugMessages = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        isInitialSetup = true
         addDebugLog("onCreate() called")
 
         // Display current density information
@@ -56,6 +58,12 @@ class MainActivity : AppCompatActivity() {
 
         // Handle radio button changes
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            // Ignore listener events during initial setup to prevent infinite loop
+            if (isInitialSetup) {
+                addDebugLog("IGNORED: Initial setup in progress")
+                return@setOnCheckedChangeListener
+            }
+
             // Prevent multiple simultaneous changes
             if (isChangingDensity) {
                 addDebugLog("BLOCKED: Already changing density")
@@ -89,6 +97,12 @@ class MainActivity : AppCompatActivity() {
                 addDebugLog("ERROR: ${e.message}")
                 isChangingDensity = false
             }
+        }
+
+        // Mark setup complete after all views are laid out
+        radioGroup.post {
+            isInitialSetup = false
+            addDebugLog("Setup complete, ready for user input")
         }
     }
 
