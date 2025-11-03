@@ -35,8 +35,11 @@ class DensityScaler : BaseLifecycleContentProvider() {
         /**
          * Enable adaptive scaling based on screen size.
          * Set to false to use FIXED_SCALE_FACTOR instead.
+         *
+         * NOTE: In this sample app, we disable automatic scaling so users
+         * start at native 100% density and can test different scales interactively.
          */
-        private const val USE_ADAPTIVE_SCALING = true
+        private const val USE_ADAPTIVE_SCALING = false
 
         /**
          * Fixed scale factor used when USE_ADAPTIVE_SCALING is false.
@@ -44,10 +47,12 @@ class DensityScaler : BaseLifecycleContentProvider() {
          * Examples:
          * - 0.5f  = 50% scale (smaller UI, more content fits on screen)
          * - 0.7f  = 70% scale (default)
-         * - 1.0f  = 100% scale (no change)
+         * - 1.0f  = 100% scale (no change) - SAMPLE APP DEFAULT
          * - 1.5f  = 150% scale (larger UI, less content fits on screen)
+         *
+         * Set to 1.0f for sample app so interactive simulator starts at native density.
          */
-        private const val FIXED_SCALE_FACTOR = 0.7f
+        private const val FIXED_SCALE_FACTOR = 1.0f
 
         /**
          * Determines the optimal scale factor based on device screen characteristics.

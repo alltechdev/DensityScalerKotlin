@@ -1,6 +1,8 @@
 package com.dpi.sample
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         updateSimulatorResult(radioGroup.checkedRadioButtonId, simulatorResult)
 
         // Handle radio button changes
-        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val scaleFactor = when (checkedId) {
                 R.id.radioOriginal -> 1.0f
                 R.id.radioSmallPhone -> 0.75f
@@ -58,11 +60,19 @@ class MainActivity : AppCompatActivity() {
                 else -> 1.0f
             }
 
+            // Disable radio group to prevent rapid clicking
+            group.isEnabled = false
+            for (i in 0 until group.childCount) {
+                group.getChildAt(i).isEnabled = false
+            }
+
             // Apply the scale dynamically
             com.dpi.DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
 
-            // Recreate activity to show changes
-            recreate()
+            // Small delay before recreate to ensure config is applied
+            Handler(Looper.getMainLooper()).postDelayed({
+                recreate()
+            }, 100)
         }
     }
 
