@@ -53,44 +53,22 @@ class DensityScaler : BaseLifecycleContentProvider() {
          * Determines the optimal scale factor based on device screen characteristics.
          *
          * Logic:
-         * - Phones (< 600dp): More aggressive scaling (0.65-0.7) to maximize content
-         * - Small tablets (600-720dp): Moderate scaling (0.75)
-         * - Large tablets (> 720dp): Light scaling (0.8-0.85)
-         * - Also considers screen density for fine-tuning
+         * - Small phones (< 360dp): Scaled down to 65% to maximize content
+         * - Normal phones (360-600dp): 100% native density
+         * - Tablets (600dp+): 100% native density
          */
         private fun getAdaptiveScaleFactor(context: android.content.Context): Float {
             val config = context.resources.configuration
-            val displayMetrics = context.resources.displayMetrics
 
             // Get smallest screen width in dp
             val smallestScreenWidthDp = config.smallestScreenWidthDp
 
-            // Get screen density DPI
-            val densityDpi = displayMetrics.densityDpi
-
             return when {
-                // Small phones (< 360dp width) - more aggressive scaling
+                // Small phones (< 360dp width) - scale down to maximize content
                 smallestScreenWidthDp < 360 -> 0.65f
 
-                // Normal phones (360-600dp) - standard scaling
-                smallestScreenWidthDp < 600 -> {
-                    when {
-                        densityDpi >= 480 -> 0.7f   // xxhdpi and above
-                        densityDpi >= 320 -> 0.7f   // xhdpi and hdpi
-                        else -> 0.75f               // mdpi and below
-                    }
-                }
-
-                // Small tablets (600-720dp) - moderate scaling
-                smallestScreenWidthDp < 720 -> 0.75f
-
-                // Large tablets (720dp+) - light scaling
-                else -> {
-                    when {
-                        densityDpi >= 320 -> 0.8f   // High density tablets
-                        else -> 0.85f               // Standard tablets
-                    }
-                }
+                // Normal phones and all tablets - native 100% density
+                else -> 1.0f
             }
         }
     }

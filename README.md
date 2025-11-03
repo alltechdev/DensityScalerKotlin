@@ -33,12 +33,11 @@ Add this inside the `<application>` tag:
 **Option A: Adaptive Scaling (Default - Recommended)**
 
 The scaler automatically adjusts based on device screen size:
-- **Small phones** (< 360dp): 65% scale
-- **Normal phones** (360-600dp): 70% scale
-- **Small tablets** (600-720dp): 75% scale
-- **Large tablets** (720dp+): 80-85% scale
+- **Small phones** (< 360dp): 65% scale to maximize content
+- **Normal phones** (360-600dp): 100% native density
+- **Tablets** (600dp+): 100% native density
 
-No configuration needed - it works automatically!
+No configuration needed - it works automatically! Most devices run at native density, only small phones get scaled down.
 
 **Option B: Fixed Scale Factor**
 
@@ -159,9 +158,8 @@ DensityScaler dynamically adjusts your Android app's screen density (DPI) withou
 
 **🌟 NEW: Smart Adaptive Scaling**
 By default, DensityScaler now automatically detects your device type and applies the optimal scale:
-- Small phones get more aggressive scaling (65%) to maximize content
-- Normal phones get balanced scaling (70%)
-- Tablets get lighter scaling (75-85%) for comfortable viewing
+- Small phones get scaling (65%) to maximize content on small screens
+- Normal phones and tablets run at 100% native density for optimal clarity
 
 **✨ Try the Interactive Sample App!**
 The included sample app features a **live UI resizer** - tap between 3 preset densities (100%, 75%, 65%) and watch the entire app resize instantly! Perfect for:
