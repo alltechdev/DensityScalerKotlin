@@ -75,19 +75,40 @@ This repository includes a GitHub Actions workflow that can build the app automa
 fun applyDynamicScale(context: Context, scaleFactor: Float)
 ```
 
-**MainActivity.kt** handles radio button clicks:
+**MainActivity.kt** handles radio button clicks with important safeguards:
 ```kotlin
+private var isInitialSetup = true  // Prevent listener from firing during view restoration
+
 radioGroup.setOnCheckedChangeListener { _, checkedId ->
+    // Ignore events during initial setup to prevent infinite recreate loop
+    if (isInitialSetup) return@setOnCheckedChangeListener
+
     val scaleFactor = when (checkedId) {
         R.id.radioOriginal -> 1.0f
         R.id.radioSmallPhone -> 0.75f
         R.id.radioPhone -> 0.65f
         else -> 1.0f
     }
+
+    // Apply to both application and activity contexts
     DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
-    recreate()  // Restart activity to apply changes
+    DensityConfiguration.applyDynamicScale(this@MainActivity, scaleFactor)
+
+    // Delay recreate to allow configuration to apply
+    Handler(Looper.getMainLooper()).postDelayed({
+        recreate()
+    }, 150)
 }
+
+// Mark setup complete after views are laid out
+radioGroup.post { isInitialSetup = false }
 ```
+
+**Important patterns for dynamic density changes:**
+- Use a flag to ignore listener events during view state restoration
+- Apply density to both application context and activity context
+- Add a small delay before recreate() to ensure configuration applies
+- Prevent rapid clicking with state flags
 
 **Note:** The initial DensityScaler ContentProvider has adaptive scaling disabled in this sample app so users can freely test different densities interactively.
 
