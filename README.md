@@ -163,6 +163,12 @@ By default, DensityScaler now automatically detects your device type and applies
 - Normal phones get balanced scaling (70%)
 - Tablets get lighter scaling (75-85%) for comfortable viewing
 
+**✨ Try the Interactive Sample App!**
+The included sample app features a **live UI resizer** - tap between 3 preset densities (100%, 75%, 65%) and watch the entire app resize instantly! Perfect for:
+- Visualizing how density scaling affects your UI
+- Testing different scales without recompiling
+- Demonstrating DensityScaler to stakeholders
+
 **Use Cases:**
 - **Multi-Device Support:** One configuration works optimally across phones and tablets
 - **Testing:** See how your app looks at different densities
@@ -176,12 +182,13 @@ The tool works by using a ContentProvider that initializes early in the app life
 
 ## 💡 Pro Tips
 
-1. **Try the sample app**: The included sample app has an interactive simulator that lets you resize the UI in real-time!
-2. **Use adaptive scaling**: Let the library automatically optimize for different devices (enabled by default)
-3. **Start with 100%**: Normal phones and tablets work great at standard density (no scaling needed)
-4. **Use Kotlin version**: More maintainable and modern with better inline documentation
-5. **Backup your APK**: When modifying existing APKs, always keep the original
-6. **Check logs**: Look for "DensityConfiguration" logs to verify scaling is applied
+1. **Try the sample app first**: Build and run `SampleApp/` to see the interactive density changer in action - it's the best way to understand what this library does!
+2. **Start with normal density**: Most modern phones and tablets work perfectly at 100% (no scaling). Only scale down if you specifically need more content on screen.
+3. **Test interactively**: Use the sample app's live resizer to find the perfect scale factor before hardcoding it
+4. **Use adaptive scaling**: Let the library automatically optimize for different devices (enabled by default)
+5. **Use Kotlin version**: More maintainable and modern with better inline documentation
+6. **Backup your APK**: When modifying existing APKs, always keep the original
+7. **Check logs**: Look for "DensityConfiguration" logs to verify scaling is applied
 
 ---
 

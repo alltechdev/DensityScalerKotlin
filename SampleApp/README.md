@@ -1,33 +1,43 @@
 # DensityScaler Sample App
 
-This is a lightweight sample Android app demonstrating the DensityScaler library in action.
+A lightweight Android app that demonstrates DensityScaler with an **interactive live UI resizer**.
 
-## What It Does
+## What Makes This Special
 
-The sample app demonstrates adaptive density scaling with two main features:
+This isn't just a demo - it's a **fully interactive playground** where you can:
+- Switch between 3 different density scales with a single tap
+- Watch the entire app resize instantly (with automatic restart)
+- See exactly how your UI would look at different densities
+- Test what scale factor works best for your use case
+
+Perfect for developers, designers, and product managers who want to visualize density scaling!
+
+## Features
 
 ### 1. Current Device Information
-Displays real-time information about your device:
-- Device type (phone or tablet)
+Displays real-time metrics about your device:
+- Device type classification
 - Screen width in dp
-- Original and scaled density (DPI)
-- Applied scale percentage
-- Screen resolution
+- Original DPI (before scaling)
+- Currently applied scale percentage
+- Current DPI (after scaling)
+- Screen resolution in pixels
 
-### 2. Interactive Size Simulator 🎮✨
+### 2. Interactive Density Changer 🎮✨
 
-**LIVE UI RESIZING!** Tap different options to see the entire app resize in real-time:
+**THE MAIN FEATURE** - Three radio buttons that actually change the app's density:
 
-- **Normal Size (100%)** - Standard device density
-- **Small (75%)** - Slightly more compact UI
-- **Smaller (65%)** - Much more content visible on screen
+- **Normal Size (100%)** - Your device's native density (no scaling)
+- **Small (75%)** - Fits ~33% more content on screen
+- **Smaller (65%)** - Fits ~50% more content on screen
 
-When you select an option, the app immediately:
-1. Applies the new density scale
-2. Restarts automatically
-3. Shows you the UI at the new size
+**How it works:**
+1. Tap any option
+2. App applies the new density scale to the system configuration
+3. Activity automatically restarts
+4. You see the entire UI (text, buttons, spacing) resize!
 
-**This is a live, interactive demonstration of DensityScaler in action!** You can instantly see how your app would look at different densities without needing multiple devices.
+This demonstrates DensityScaler's core capability: **runtime density modification without code changes**.
 
 ## Building the App
 
@@ -53,22 +63,33 @@ This repository includes a GitHub Actions workflow that can build the app automa
 
 ## How DensityScaler Is Integrated
 
-1. **Source Files**: DensityScaler Kotlin files are in `app/src/main/java/com/dpi/`
-2. **Manifest Configuration**: ContentProvider is declared in `AndroidManifest.xml`
-3. **Adaptive Scaling**: Enabled by default, automatically adjusts for different devices
+1. **Source Files**: DensityScaler Kotlin files copied to `app/src/main/java/com/dpi/`
+2. **Manifest Configuration**: ContentProvider declared in `AndroidManifest.xml`
+3. **Dynamic Scaling**: Uses `DensityConfiguration.applyDynamicScale()` for runtime changes
+4. **Interactive UI**: MainActivity calls `recreate()` after applying new scale
 
-### Customizing the Scale
+### Key Implementation Details
 
-Edit `app/src/main/java/com/dpi/DensityScaler.kt`:
-
-**To disable adaptive scaling and use a fixed value:**
+**DensityConfiguration.kt** has a companion method for dynamic scaling:
 ```kotlin
-private const val USE_ADAPTIVE_SCALING = false
-private const val FIXED_SCALE_FACTOR = 0.7f  // Your desired scale
+fun applyDynamicScale(context: Context, scaleFactor: Float)
 ```
 
-**To adjust the adaptive scaling thresholds:**
-Modify the `getAdaptiveScaleFactor()` function to change which scale factors are used for different screen sizes.
+**MainActivity.kt** handles radio button clicks:
+```kotlin
+radioGroup.setOnCheckedChangeListener { _, checkedId ->
+    val scaleFactor = when (checkedId) {
+        R.id.radioOriginal -> 1.0f
+        R.id.radioSmallPhone -> 0.75f
+        R.id.radioPhone -> 0.65f
+        else -> 1.0f
+    }
+    DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
+    recreate()  // Restart activity to apply changes
+}
+```
+
+**Note:** The initial DensityScaler ContentProvider has adaptive scaling disabled in this sample app so users can freely test different densities interactively.
 
 ## Requirements
 
