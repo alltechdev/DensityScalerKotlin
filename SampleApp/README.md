@@ -4,20 +4,29 @@ This is a lightweight sample Android app demonstrating the DensityScaler library
 
 ## What It Does
 
-The app shows a simple UI that displays:
+The sample app demonstrates adaptive density scaling with two main features:
+
+### 1. Current Device Information
+Displays real-time information about your device:
 - Device type (phone or tablet)
 - Screen width in dp
-- Current screen density (DPI)
-- Density scale factor
+- Original and scaled density (DPI)
+- Applied scale percentage
 - Screen resolution
 
-**Adaptive Scaling is Enabled:** The DensityScaler automatically adjusts the scale factor based on your device:
+### 2. Scale Factor Simulator 🎮
+An interactive simulator that lets you see what scale factor would be applied on different devices:
 - **Small phones** (< 360dp): 65% scale
 - **Normal phones** (360-600dp): 70% scale
 - **Small tablets** (600-720dp): 75% scale
-- **Large tablets** (720dp+): 80-85% scale
+- **Large tablets** (720dp+): 80% scale
 
-This means the app will automatically optimize the UI density for different screen sizes!
+Simply select a device type using the radio buttons to see:
+- The exact scale factor that would be applied
+- The visual effect (e.g., "Maximum content on screen")
+- An example calculation showing the DPI transformation
+
+**This helps you understand how DensityScaler will behave across different devices without needing to test on physical hardware!**
 
 ## Building the App
 

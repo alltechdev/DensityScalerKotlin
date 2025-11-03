@@ -1,35 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DensityScaler Sample App"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <TextView
-        android:id="@+id/infoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This app demonstrates DensityScaler in action.\n\nThe UI is scaled to 70% of normal density."
-        android:textSize="16sp"
-        android:gravity="center"
-        android:layout_marginBottom="24dp" />
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DensityScaler Sample App"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:id="@+id/densityInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#666666"
-        android:gravity="center" />
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This app demonstrates adaptive density scaling"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal" />
 
-</LinearLayout>
+        <!-- Current Device Info Card -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Device"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/densityInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:background="#F0F0F0"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Screen Size Simulator -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scale Factor Simulator"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="See what scale factor would be applied on different devices:"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="12dp" />
+
+        <RadioGroup
+            android:id="@+id/deviceTypeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radioSmallPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Small Phone (< 360dp)" />
+
+            <RadioButton
+                android:id="@+id/radioPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Normal Phone (360-600dp)"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/radioSmallTablet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Small Tablet (600-720dp)" />
+
+            <RadioButton
+                android:id="@+id/radioTablet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tablet (720dp+)" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/simulatorResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:background="#E8F5E9"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>

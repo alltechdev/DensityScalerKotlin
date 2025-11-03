@@ -155,8 +155,16 @@ For Smali modifications, use these hexadecimal values:
 
 ## 📱 What This Does
 
-DensityScaler dynamically adjusts your Android app's screen density (DPI) without modifying any of your UI code. This is useful for:
+DensityScaler dynamically adjusts your Android app's screen density (DPI) without modifying any of your UI code.
 
+**🌟 NEW: Smart Adaptive Scaling**
+By default, DensityScaler now automatically detects your device type and applies the optimal scale:
+- Small phones get more aggressive scaling (65%) to maximize content
+- Normal phones get balanced scaling (70%)
+- Tablets get lighter scaling (75-85%) for comfortable viewing
+
+**Use Cases:**
+- **Multi-Device Support:** One configuration works optimally across phones and tablets
 - **Testing:** See how your app looks at different densities
 - **Accessibility:** Make UI elements larger or smaller
 - **APK Modification:** Resize third-party apps
@@ -168,11 +176,12 @@ The tool works by using a ContentProvider that initializes early in the app life
 
 ## 💡 Pro Tips
 
-1. **Start with 0.7**: This is a good balanced scale for most apps
-2. **Test thoroughly**: Some UI elements may not scale perfectly
-3. **Use Kotlin version**: More maintainable and modern
-4. **Backup your APK**: When modifying existing APKs, always keep the original
-5. **Check logs**: Look for "DensityConfiguration" logs to verify scaling is applied
+1. **Use adaptive scaling**: Let the library automatically optimize for different devices (enabled by default)
+2. **Test on multiple devices**: The sample app shows exactly what scale is applied to each device
+3. **Customize thresholds**: Adjust the adaptive scaling logic in `getAdaptiveScaleFactor()` for your needs
+4. **Use Kotlin version**: More maintainable and modern with better inline documentation
+5. **Backup your APK**: When modifying existing APKs, always keep the original
+6. **Check logs**: Look for "DensityConfiguration" logs to verify scaling is applied
 
 ---
 
