@@ -14,19 +14,20 @@ Displays real-time information about your device:
 - Applied scale percentage
 - Screen resolution
 
-### 2. Scale Factor Simulator 🎮
-An interactive simulator that lets you see what scale factor would be applied on different devices:
-- **Small phones** (< 360dp): 65% scale
-- **Normal phones** (360-600dp): 70% scale
-- **Small tablets** (600-720dp): 75% scale
-- **Large tablets** (720dp+): 80% scale
+### 2. Interactive Size Simulator 🎮✨
 
-Simply select a device type using the radio buttons to see:
-- The exact scale factor that would be applied
-- The visual effect (e.g., "Maximum content on screen")
-- An example calculation showing the DPI transformation
+**LIVE UI RESIZING!** Tap different options to see the entire app resize in real-time:
 
-**This helps you understand how DensityScaler will behave across different devices without needing to test on physical hardware!**
+- **Normal Size (100%)** - Standard device density
+- **Small (75%)** - Slightly more compact UI
+- **Smaller (65%)** - Much more content visible on screen
+
+When you select an option, the app immediately:
+1. Applies the new density scale
+2. Restarts automatically
+3. Shows you the UI at the new size
+
+**This is a live, interactive demonstration of DensityScaler in action!** You can instantly see how your app would look at different densities without needing multiple devices.
 
 ## Building the App
 

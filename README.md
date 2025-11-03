@@ -176,9 +176,9 @@ The tool works by using a ContentProvider that initializes early in the app life
 
 ## 💡 Pro Tips
 
-1. **Use adaptive scaling**: Let the library automatically optimize for different devices (enabled by default)
-2. **Test on multiple devices**: The sample app shows exactly what scale is applied to each device
-3. **Customize thresholds**: Adjust the adaptive scaling logic in `getAdaptiveScaleFactor()` for your needs
+1. **Try the sample app**: The included sample app has an interactive simulator that lets you resize the UI in real-time!
+2. **Use adaptive scaling**: Let the library automatically optimize for different devices (enabled by default)
+3. **Start with 100%**: Normal phones and tablets work great at standard density (no scaling needed)
 4. **Use Kotlin version**: More maintainable and modern with better inline documentation
 5. **Backup your APK**: When modifying existing APKs, always keep the original
 6. **Check logs**: Look for "DensityConfiguration" logs to verify scaling is applied
