@@ -90,6 +90,7 @@ internal class DensityConfiguration(
         fun applyDynamicScale(context: Context, scaleFactor: Float) {
             try {
                 val resources = context.resources
+                val displayMetrics = resources.displayMetrics
                 val config = Configuration(resources.configuration)
 
                 // Store original DPI on first call
@@ -99,9 +100,15 @@ internal class DensityConfiguration(
 
                 val newDensityDpi = (storedOriginalDpi * scaleFactor).roundToInt()
                 config.densityDpi = newDensityDpi
+
+                // Also update display metrics directly
+                displayMetrics.densityDpi = newDensityDpi
+                displayMetrics.density = newDensityDpi / 160f
+                displayMetrics.scaledDensity = displayMetrics.density
+
                 Log.i(TAG, "Dynamic scale applied: $scaleFactor -> $newDensityDpi dpi (from original $storedOriginalDpi)")
                 @Suppress("DEPRECATION")
-                resources.updateConfiguration(config, resources.displayMetrics)
+                resources.updateConfiguration(config, displayMetrics)
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to apply dynamic scale", e)
             }

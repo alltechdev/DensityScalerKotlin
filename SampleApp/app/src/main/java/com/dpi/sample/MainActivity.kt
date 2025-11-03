@@ -85,7 +85,9 @@ class MainActivity : AppCompatActivity() {
 
             // Apply the scale dynamically
             try {
+                // Apply to both application context and activity
                 com.dpi.DensityConfiguration.applyDynamicScale(applicationContext, scaleFactor)
+                com.dpi.DensityConfiguration.applyDynamicScale(this@MainActivity, scaleFactor)
                 addDebugLog("Scale applied, recreating in 150ms...")
 
                 // Recreate activity to show changes
