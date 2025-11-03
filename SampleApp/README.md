@@ -5,11 +5,19 @@ This is a lightweight sample Android app demonstrating the DensityScaler library
 ## What It Does
 
 The app shows a simple UI that displays:
+- Device type (phone or tablet)
+- Screen width in dp
 - Current screen density (DPI)
 - Density scale factor
-- Screen dimensions
+- Screen resolution
 
-The DensityScaler is configured to scale the UI to **70%** of the normal density, making all UI elements appear smaller and allowing more content to fit on screen.
+**Adaptive Scaling is Enabled:** The DensityScaler automatically adjusts the scale factor based on your device:
+- **Small phones** (< 360dp): 65% scale
+- **Normal phones** (360-600dp): 70% scale
+- **Small tablets** (600-720dp): 75% scale
+- **Large tablets** (720dp+): 80-85% scale
+
+This means the app will automatically optimize the UI density for different screen sizes!
 
 ## Building the App
 
@@ -37,12 +45,20 @@ This repository includes a GitHub Actions workflow that can build the app automa
 
 1. **Source Files**: DensityScaler Kotlin files are in `app/src/main/java/com/dpi/`
 2. **Manifest Configuration**: ContentProvider is declared in `AndroidManifest.xml`
-3. **Scale Factor**: Set to 0.7f (70%) in `DensityScaler.kt`
+3. **Adaptive Scaling**: Enabled by default, automatically adjusts for different devices
 
-To change the scale:
-- Edit `app/src/main/java/com/dpi/DensityScaler.kt`
-- Modify the `SCALE_FACTOR` constant (line ~38)
-- Rebuild the app
+### Customizing the Scale
+
+Edit `app/src/main/java/com/dpi/DensityScaler.kt`:
+
+**To disable adaptive scaling and use a fixed value:**
+```kotlin
+private const val USE_ADAPTIVE_SCALING = false
+private const val FIXED_SCALE_FACTOR = 0.7f  // Your desired scale
+```
+
+**To adjust the adaptive scaling thresholds:**
+Modify the `getAdaptiveScaleFactor()` function to change which scale factors are used for different screen sizes.
 
 ## Requirements
 

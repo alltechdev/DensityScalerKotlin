@@ -28,18 +28,34 @@ Add this inside the `<application>` tag:
 
 **Note:** Using `${applicationId}` automatically uses your app's package name. Alternatively, replace it manually like: `com.yourapp.package.com.dpi.DensityScaler`
 
-### Step 3: Adjust the Scale Factor
-Open `DensityScaler.kt` and modify the `SCALE_FACTOR` constant:
+### Step 3: Configure Scaling (Adaptive or Fixed)
+
+**Option A: Adaptive Scaling (Default - Recommended)**
+
+The scaler automatically adjusts based on device screen size:
+- **Small phones** (< 360dp): 65% scale
+- **Normal phones** (360-600dp): 70% scale
+- **Small tablets** (600-720dp): 75% scale
+- **Large tablets** (720dp+): 80-85% scale
+
+No configuration needed - it works automatically!
+
+**Option B: Fixed Scale Factor**
+
+To use a fixed scale for all devices, open `DensityScaler.kt`:
 ```kotlin
 companion object {
-    // CHANGE THIS VALUE (line ~38)
-    private const val SCALE_FACTOR = 0.7f  // 70% scale
+    // Disable adaptive scaling
+    private const val USE_ADAPTIVE_SCALING = false
+
+    // Set your fixed scale factor
+    private const val FIXED_SCALE_FACTOR = 0.7f  // 70% scale
 }
 ```
 
 **Scale Factor Guide:**
 - `0.5f` = 50% scale (much smaller UI, more content)
-- `0.7f` = 70% scale (default, balanced)
+- `0.7f` = 70% scale (balanced)
 - `1.0f` = 100% scale (no change)
 - `1.5f` = 150% scale (larger UI for accessibility)
 
